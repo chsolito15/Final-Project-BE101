@@ -1,0 +1,141 @@
+<%-include('partials/head') -%>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">Home</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarCollapse"
+      aria-controls="navbarCollapse"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+      <ul class="navbar-nav me-auto mb-2 mb-md-0"></ul>
+      <form class="d-flex" method="GET" action="/search">
+        <input
+          class="form-control me-2"
+          type="search"
+          name="search"
+          placeholder="Search by name"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<div class="container d-flex mb-2">
+  <div class="card me-2">
+    <div class="card-header">
+      <h6 class="font-weight-bold">Search category</h6>
+    </div>
+
+    <div class="card-body">
+
+      <div class="flex-column-between">
+
+        <form action="/filter" method="GET">
+          <div class="col">
+            <label for="category" class="checkbox-wrap">Phones
+              <input type="checkbox"name="category" id="category" value="Phones"/> 
+            </label>
+          </div>
+          <div class="col">
+            <label for="category" class="checkbox-wrap">Laptops
+              <input type="checkbox" name="category" id="category" value="Laptops"
+              />
+            </label>
+          </div>
+          <div class="col">
+            <label for="category" class="checkbox-wrap">Headset
+              <input type="checkbox" name="category" id="category" value="Headsets"
+              />
+            </label>
+          </div>
+          <button type="submit" class="btn btn-link">Apply</button> 
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col">
+          <h4 class="font-weight-bold">Inventory Item</h4>
+        </div>
+        <div class="col">
+          <a href="/add-item" class="btn btn-success float-end"> Add Item </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+          <tr style="white-space: nowrap">
+            <th>#</th>
+            <th>Product Name</th>
+            <th>Catergory</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <% if (items.length > 0) { %> <% items.forEach((item, index) =>{ %>
+
+          <tr>
+            <td><%= (index + 1) %></td>
+            <td><%= item.name %></td>
+            <td><%= item.category %></td>
+            <td><%= item.quantity %></td>
+            <td><%= item.price %></td>
+            <td><%= item.description %></td>
+
+            <% const date = new Date(item.createdAt);%> <% const formattedDate =
+            `${date.getMonth()+ 1}/${date.getDate()}/${date.getFullYear()}`;%>
+            <td><%= formattedDate %></td>
+
+            <td style="white-space: nowrap">
+              <a
+                href="/view-item/<%= item._id %>"
+                class="btn btn-sm btn-info text-white"
+                >View</a
+              >
+              <a
+                href="/update-item/<%= item._id %>"
+                class="btn btn-sm btn-warning text-dark"
+                >Update</a
+              >
+              <form
+                class="d-inline"
+                action="/delete-item/<%= item._id %>?_method=DELETE"
+                method="POST"
+              >
+                <button class="btn btn-sm btn-danger">Delete</button>
+              </form>
+            </td>
+          </tr>
+
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="8" class="text-center">No items found</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<%-include('partials/footer') -%>

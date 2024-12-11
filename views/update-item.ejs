@@ -1,0 +1,83 @@
+<%-include('partials/head') -%>
+
+<div class="container mt-5 d-flex flex-column">
+  <a href="/" class="btn btn-primary ms-auto mb-3">Back</a>
+
+  <div class="card text-center">
+    <div class="card-header">
+      <h5 class="card-title">Edit Item</h5>
+    </div>
+    <div class="card-body">
+      <form action="/update-item/<%= item._id %>?_method=PUT" method="POST">
+        <div class="row row-cols-2">
+          <div class="col mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              name="name"
+              id="name"
+              placeholder="Enter your name"
+              value="<%= item.name %>"
+              required
+            />
+          </div>
+          <div class="col mb-3">
+            <label for="category" class="form-label">Category</label>
+            <input
+              type="text"
+              class="form-control"
+              name="category"
+              id="category"
+              placeholder="Enter your name"
+              value="<%= item.category %>"
+              required
+            />
+          </div>
+          <div class="col mb-3">
+            <label for="quantity" class="form-label">Quantity</label>
+            <input
+              type="number"
+              class="form-control"
+              name="quantity"
+              id="quantity"
+              placeholder="Enter your quantity"
+              min="0"
+              value="<%= item.quantity %>"
+              required
+            />
+          </div>
+          <div class="col mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="number"
+              class="form-control"
+              name="price"
+              id="price"
+              placeholder="Enter your price"
+              min="0"
+              value="<%= item.price %>"
+              required
+            />
+          </div>
+
+          <div class="col-12 mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              type="text"
+              class="form-control"
+              name="description"
+              id="description"
+              placeholder="Enter Description"
+              required
+            ><%= item.description %></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-success col-2">Update</button>
+        <button type="reset" class="btn btn-danger col-2">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%-include('partials/footer') -%>
