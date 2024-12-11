@@ -30,14 +30,7 @@ const addItemForm = async (req, res) => {
 
 // Add Item
 const addItem = async (req, res) => {
-  const data = req.body;
-  let inventory = await new Item({
-    name: data.name,
-    category: data.category,
-    quantity: data.quantity,
-    price: data.price,
-    description: data.description,
-  });
+  let inventory = await new Item({...req.body});
   await inventory.save();
   res.redirect("/");
 };
